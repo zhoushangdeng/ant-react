@@ -1,0 +1,18 @@
+.ant-table {
+    height: 83vh;
+    background-color: white;
+}
+
+.ant-layout {
+    background-color: white !important;
+}
+
+.ant-table-pagination-right {
+    justify-content: flex-start !important;
+    margin-left: 10px !important;
+    background-color: white;
+}
+
+.ant-pagination {
+    background-color: white;
+}

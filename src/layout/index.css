@@ -1,0 +1,13 @@
+.ant-layout-header {
+    display: flex;
+}
+
+.username {
+    flex: 1;
+    size: 20px;
+    text-align: right;
+}
+
+.content {
+    background-color: white;
+}

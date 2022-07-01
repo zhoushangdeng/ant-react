@@ -1,0 +1,10 @@
+.login {
+    display: grid;
+    border: 1px solid black;
+    place-items: center;
+    height: 100vh;
+}
+
+.ant-input-affix-wrapper-lg {
+    width: 400px !important;
+}
