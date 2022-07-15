@@ -1,55 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     AppstoreOutlined,
     ContainerOutlined,
     DesktopOutlined,
     MailOutlined,
-    LinkOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
     PieChartOutlined,
 } from '@ant-design/icons';
-import { Button, Menu } from 'antd';
+import { Menu } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { getMenus } from '@/api/menus'
-
-
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchMenus, fetchMenusTree } from '@/store/action'
+import { isEmpty } from 'lodash'
 function getItem(label, key, icon, children, type) {
     return { key, icon, children, label, type, };
 }
 
+const initMenu = (menus) => {
+    const menusTree = []
+    for (let i = 0; i < menus.length; i++) {
+        const { title, id, children } = menus[i]
+        menusTree.push(getItem(title, id, <PieChartOutlined />, children.length > 0 ? initMenu(children) : ''))
+    }
+    return menusTree
+}
+
 const Left = () => {
     const navite = useNavigate()
-    const goRoute = (val) => {
-        navite(val)
-    }
-    const items = [
-        getItem('菜单1', '1', <PieChartOutlined />),
-        getItem('菜单2', '2', <DesktopOutlined />),
-        getItem('菜单3', '3', <ContainerOutlined />),
-        getItem('菜单4', 'sub1', <MailOutlined />, [
-            getItem(<span onClick={() => goRoute('/login')}> 跳转到登录</span >, '5'),
-            getItem(<span onClick={() => goRoute('/home')}>返回首页</span>, '6'),
-            getItem('菜单4-3', '7'),
-            getItem('菜单4-4', '8'),
-        ]),
-        getItem('菜单5', 'sub2', <AppstoreOutlined />, [
-            getItem('菜单5-1', '9'),
-            getItem('菜单5-2', '10'),
-            getItem('菜单5-3', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
-        ]),
-    ];
+    const dispatch = useDispatch()
+    const menusTree = useSelector(state => { return state.menusTree })
+    const menus = useSelector(state => { return state.menus })
+    // 如果menusTree不存在则请求后端获取
+    useEffect(() => {
+        isEmpty(menusTree) ? dispatch(fetchMenusTree()) : ""
+        isEmpty(menus) ? dispatch(fetchMenus()) : ""
+    }, []);
+    const goRoute = (val) => { navite(val) }
+    const menusTree_ = initMenu(menusTree)
 
     return (
-        <div style={{ width: 200, }} >
+        <div style={{ width: 200 }} >
             <Menu
                 defaultSelectedKeys={['2']}
                 defaultOpenKeys={['sub2']}
                 mode="inline"
                 theme="dark"
-                inlineCollapsed={true}
-                items={items}
+                items={menusTree_}
             />
         </div>
     );

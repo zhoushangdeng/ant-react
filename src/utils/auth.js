@@ -19,7 +19,9 @@ export function getRoleId() {
     return cookies.get(roleIdKey);
 }
 
-
+export function removeId() {
+    return cookies.remove(roleIdKey);
+}
 
 export function removeToken() {
     return cookies.remove(TokenKey);

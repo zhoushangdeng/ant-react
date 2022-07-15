@@ -2,6 +2,10 @@
     display: flex;
 }
 
+.ant-layout.ant-layout-has-sider {
+    height: 100%;
+}
+
 .username {
     flex: 1;
     size: 20px;

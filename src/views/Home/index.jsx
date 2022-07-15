@@ -16,12 +16,7 @@ function Home() {
             setIsLoading(true);
             const result = await getMenus({ roleId: getRoleId() })
             const data = result.map(({ title, id, path }) => {
-                return {
-                    key: id,
-                    name: title,
-                    age: 42,
-                    address: path,
-                }
+                return { key: id, name: title, age: id, address: path }
             })
             setData(data);
             setIsLoading(false);
@@ -29,37 +24,10 @@ function Home() {
         fetchData();
     }, []);
 
-    const dataSource = [
-        {
-            key: '1',
-            name: '胡彦斌',
-            age: 32,
-            address: '西湖区湖底公园1号',
-        },
-        {
-            key: '2',
-            name: '胡彦祖',
-            age: 42,
-            address: '西湖区湖底公园1号',
-        },
-    ];
-
     const columns = [
-        {
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: '年龄',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: '住址',
-            dataIndex: 'address',
-            key: 'address',
-        },
+        { title: '菜单名称', dataIndex: 'name', key: 'name', },
+        { title: 'id', dataIndex: 'age', key: 'age', },
+        { title: '路径', dataIndex: 'address', key: 'address', }
     ];
 
     return (<div>{isLoading ? <span>isLoading...</span> : <Table dataSource={data} columns={columns} />}</div>)

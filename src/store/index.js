@@ -1,8 +1,7 @@
-import reducer from "./reducer";
+import userReducer from "./reducer";
+import thunk from 'redux-thunk'
+import { legacy_createStore as createStore, applyMiddleware, combineReducers } from 'redux'
 
-// 创建仓库
-import { legacy_createStore as createStore } from 'redux'
+const store = createStore(userReducer, applyMiddleware(thunk))
 
-const store = createStore(reducer)
-
-export default store
+export { store }
